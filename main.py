@@ -1,3 +1,5 @@
+import os
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from detoxify import Detoxify
@@ -24,3 +26,7 @@ async def check_toxicity(request: TextRequest):
     model = Detoxify('multilingual')
     result = model.predict([text])
     return JSONResponse(content={"text": text, "result": result})
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
