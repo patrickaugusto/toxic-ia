@@ -27,4 +27,4 @@ def check_toxicity(request: TextRequest):
     text = request.text
     result = model.predict([text])
 
-    return {"text": text, "result": result})
+    return {"text": text, "result": result}
