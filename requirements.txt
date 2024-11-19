@@ -1,4 +1,2 @@
-fastapi
-uvicorn
+fastapi[all]
 detoxify
-torch
