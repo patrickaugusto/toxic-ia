@@ -1,14 +1,15 @@
-import os
-import uvicorn
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from detoxify import Detoxify
 from pydantic import BaseModel
+from detoxify import Detoxify
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+import nest_asyncio
+import uvicorn
+
+nest_asyncio.apply()
 
 app = FastAPI()
 
-# Habilitar CORS para permitir acesso a partir do front-end
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,12 +18,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+model = Detoxify('multilingual')
+
 class TextRequest(BaseModel):
     text: str
 
 @app.post("/check_toxicity")
 async def check_toxicity(request: TextRequest):
     text = request.text
-    model = Detoxify('multilingual')
     result = model.predict([text])
+
     return JSONResponse(content={"text": text, "result": result})
