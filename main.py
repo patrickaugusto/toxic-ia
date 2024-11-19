@@ -3,10 +3,6 @@ from pydantic import BaseModel
 from detoxify import Detoxify
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import nest_asyncio
-import uvicorn
-
-nest_asyncio.apply()
 
 app = FastAPI()
 
