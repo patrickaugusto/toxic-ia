@@ -19,6 +19,10 @@ model = Detoxify('multilingual')
 class TextRequest(BaseModel):
     text: str
 
+@app.get("/teste)
+async def helloworld():
+    return "hello world"
+
 @app.post("/check_toxicity")
 async def check_toxicity(request: TextRequest):
     text = request.text
