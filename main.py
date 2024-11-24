@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from detoxify import Detoxify
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,13 +19,9 @@ model = Detoxify('multilingual')
 class TextRequest(BaseModel):
     text: str
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
 @app.post("/check_toxicity")
 def check_toxicity(request: TextRequest):
     text = request.text
     result = model.predict([text])
 
-    return {"text": text, "result": result}
+    return JSONResponse(content={"text": text, "result": result})
